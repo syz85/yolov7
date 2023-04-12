@@ -18,8 +18,8 @@ from utils.add_nms import RegisterNMS
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default='./yolor-csp-c.pt', help='weights path')
-    parser.add_argument('--img-size', nargs='+', type=int, default=[640, 640], help='image size')  # height, width
+    parser.add_argument('--weights', type=str, default='runs/train/yolov7_seal/weights/best.pt', help='weights path')
+    parser.add_argument('--img-size', nargs='+', type=int, default=[512, 512], help='image size')  # height, width
     parser.add_argument('--batch-size', type=int, default=1, help='batch size')
     parser.add_argument('--dynamic', action='store_true', help='dynamic ONNX axes')
     parser.add_argument('--dynamic-batch', action='store_true', help='dynamic batch onnx for tensorrt and onnx-runtime')
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     parser.add_argument('--max-wh', type=int, default=None, help='None for tensorrt nms, int value for onnx-runtime nms')
     parser.add_argument('--topk-all', type=int, default=100, help='topk objects for every images')
     parser.add_argument('--iou-thres', type=float, default=0.45, help='iou threshold for NMS')
-    parser.add_argument('--conf-thres', type=float, default=0.25, help='conf threshold for NMS')
+    parser.add_argument('--conf-thres', type=float, default=0.80, help='conf threshold for NMS')
     parser.add_argument('--device', default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--simplify', action='store_true', help='simplify onnx model')
     parser.add_argument('--include-nms', action='store_true', help='export end2end onnx')
@@ -101,7 +101,7 @@ if __name__ == '__main__':
         print('CoreML export success, saved as %s' % f)
     except Exception as e:
         print('CoreML export failure: %s' % e)
-                     
+
     # TorchScript-Lite export
     try:
         print('\nStarting TorchScript-Lite export with torch %s...' % torch.__version__)
